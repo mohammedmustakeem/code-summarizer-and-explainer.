@@ -1,0 +1,314 @@
+{
+  "name": "Auto summary and explanaior agent.",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        64,
+        400
+      ],
+      "id": "923a9811-3df0-460e-af36-dd48c5012860",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "v8FmtWjynsJjApl9",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "sender": "mohammedmustakeem19@gmail.com"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -176,
+        688
+      ],
+      "id": "bd1ed793-55c9-4f18-9a85-db6e53084495",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmUqmkHHNSRBngrS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}\nyour task is to give me the summary  of this cdoe and if their is anykind of meeting you give me everythigns in the jason foramt pls .\nNOTE:DONT EDIT NAYTHING EXTAR IN IT.\nlikr this \nReturn output ONLY in valid JSON format like this and i only wnat sumamry:\n\n{\n  \"summary\": \"\"\n}.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        48,
+        176
+      ],
+      "id": "29f3b7ef-3255-43dd-a280-b4dd7a2ed7e4",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}\nyour task is to give me the line by line expalantion of  the code and if any liabraries are used over theri you should exalin them aslo,and if their is anykind of meeting you give me everythigns  ,so abically you act like my perosnal assaitn that tell me everything.\nNOTE: dont chnage the code jsut add commentws and expalntion of the code\nthe result shiuld be ina proepr format like line one expaliantiona dna line two expalnationadn not like amix up of all .\n{\nexplanation:\n}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        64,
+        576
+      ],
+      "id": "7ed83712-a19c-4d5f-9429-a8c57202ef76",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        64,
+        784
+      ],
+      "id": "cb1637b1-8e17-42d7-90a9-8b0e066e08b8",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "v8FmtWjynsJjApl9",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Gmail Trigger').item.json.to.value[0].address }}",
+        "subject": "=Result",
+        "message": "=<h2>Summary</h2>\n<p>{{$json.output.summary}}</p>\n\n<h2>Explanation</h2>\n<p>{{$json.output.explanation}}</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        448
+      ],
+      "id": "fcd9b101-02e3-49e4-a983-695fb2516054",
+      "name": "Send a message",
+      "webhookId": "73252d78-c19c-4219-8dd1-873940d6a221",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmUqmkHHNSRBngrS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        608,
+        496
+      ],
+      "id": "1aa35756-af9d-407f-961c-f096461357c0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"summary\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t},\n\t\"required\": [\"summary\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        400
+      ],
+      "id": "6888a461-46fc-437e-bb24-bd4a3b20531f",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"explanation\": {\n\t\t\t\"type\": \"string\"\n\t\t},\n      \"required\":[\"explanation\"]\n\t}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        784
+      ],
+      "id": "81949453-ee52-4f5d-aa32-4cf5ecfb040a",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "IMPORTANT"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        112,
+        976
+      ],
+      "id": "65db6a46-1226-4d72-8e2a-08d10d5ddd97",
+      "name": "Add label to message",
+      "webhookId": "00f52b79-cffc-4400-b9c4-a05672e51c42",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmUqmkHHNSRBngrS",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Add label to message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6191920b-38fc-4cd8-a07a-8e02b3851401",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cf76a8a618254d07a1a288f93286b28218cdeea44c6ccd2c5150d88301d81eb6"
+  },
+  "id": "eWb38nRHpaGnpwXw",
+  "tags": []
+}
