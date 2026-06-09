@@ -1,28 +1,43 @@
-# summarizer-and-explainer
-The AI agent acts like a smart assistant that reads your email, explains it in detail, and provides a neat summary so you can act faster.
-## What the AI Agent Does
-- When a new email arrives, the AI agent fetches the email content.  
-- It uses the Google Gemini ChatStructured Output Model to analyze the text.  
-- The Output Parser ensures the response is in a structured format (for example, summary, explanation, or key points).  
-- The agent then produces two outputs:  
-  1. Summary – a concise version of the email highlighting the main idea.  
-  2. Explanation – a more detailed breakdown of what the email means.  
+**Summarizer and Explainer**
 
-So, if you send an email to this system, the agent will:  
-- Read only your email.  
-- Extract the important information.  
-- Generate a summary and explanation.  
-- Pass that structured output forward in the workflow (for labeling, merging, or sending a reply).  
+This AI agent functions as an intelligent assistant that reads incoming emails, analyzes their content, and provides both a concise summary and a detailed explanation. Its purpose is to help users quickly understand important information and take appropriate action.
 
----
+### What the AI Agent Does
 
-## Advantages of This Setup
-- Personalized Processing – It only fetches and processes the email you sent.  
-- Clarity – You don’t need to read the entire email; the agent provides a summary and explanation.  
-- Structured Output – The data is clean and ready for automation (labels, replies, triggers).  
-- ime-Saving– Reduces manual reading and categorization.  
-- Scalable – Can handle large volumes of emails without human effort.  
+When a new email is received, the AI agent performs the following steps:
 
----
+1. Retrieves the content of the email.
+2. Uses the Google Gemini Chat Structured Output Model to analyze the text.
+3. Processes the response through an Output Parser to ensure the results follow a structured format.
+4. Generates two outputs:
 
-In short,the AI agent acts like a **smart assistant** that reads your email, explains it in detail, and provides a neat summary so you can act faster.  
+   * **Summary:** A brief overview highlighting the key message of the email.
+   * **Explanation:** A detailed interpretation that provides additional context and meaning.
+
+As a result, the system can:
+
+* Read the email content provided to it.
+* Identify and extract the most important information.
+* Produce a clear summary and explanation.
+* Forward the structured output for further actions such as labeling, merging, triggering workflows, or generating replies.
+
+### Advantages of This Setup
+
+**Personalized Processing**
+The system processes only the email intended for analysis, ensuring focused and relevant results.
+
+**Improved Clarity**
+Users do not need to read lengthy emails in full, as the agent presents the essential information in an easy-to-understand format.
+
+**Structured Output**
+The generated output is organized and suitable for integration into automated workflows.
+
+**Time Saving**
+By reducing manual reading and interpretation, the agent enables faster decision-making.
+
+**Scalability**
+The solution can efficiently handle large volumes of emails without requiring additional human effort.
+
+### Conclusion
+
+In summary, this AI agent serves as a smart email assistant that reads email content, explains it in detail, and provides a concise summary. By transforming unstructured email data into meaningful and actionable insights, it helps users save time, improve productivity, and respond more effectively.
