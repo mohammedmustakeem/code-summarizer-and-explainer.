@@ -1,4 +1,5 @@
-# summarizer-and-explainer.the AI agent acts like a smart assistant that reads your email, explains it in detail, and provides a neat summary so you can act faster.
+# summarizer-and-explainer.
+The AI agent acts like a smart assistant that reads your email, explains it in detail, and provides a neat summary so you can act faster.
 ## What the AI Agent Does
 - When a new email arrives, the AI agent fetches the email content.  
 - It uses the Google Gemini ChatStructured Output Model to analyze the text.  
