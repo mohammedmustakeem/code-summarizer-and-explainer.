@@ -1,4 +1,4 @@
-# summarizer-and-explainer.
+# summarizer-and-explainer
 The AI agent acts like a smart assistant that reads your email, explains it in detail, and provides a neat summary so you can act faster.
 ## What the AI Agent Does
 - When a new email arrives, the AI agent fetches the email content.  
