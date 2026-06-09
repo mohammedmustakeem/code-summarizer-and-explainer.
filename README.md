@@ -1,5 +1,5 @@
 # summarizer-and-explainer.
- the AI agent acts like a smart assistant that reads your email, explains it in detail, and provides a neat summary so you can act faster.
+the AI agent acts like a smart assistant that reads your email, explains it in detail, and provides a neat summary so you can act faster.
 
 ---
 
@@ -28,4 +28,4 @@ So, if you send an email to this system, the agent will:
 
 ---
 
-In short, the AI agent acts like a **smart assistant** that reads your email, explains it in detail, and provides a neat summary so you can act faster.  
+In short,the AI agent acts like a **smart assistant** that reads your email, explains it in detail, and provides a neat summary so you can act faster.  
